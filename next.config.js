@@ -7,9 +7,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // PENTING: Ganti 'landing-page-nextjs' dengan nama repository Anda!
-  basePath: isProd ? '/landing-page-nextjs' : '',
-  assetPrefix: isProd ? '/landing-page-nextjs/' : '',
+  // PENTING: Nama repository Anda adalah 'landing-page.io'
+  basePath: isProd ? '/landing-page.io' : '',
+  assetPrefix: isProd ? '/landing-page.io/' : '',
 }
 
 module.exports = nextConfig
