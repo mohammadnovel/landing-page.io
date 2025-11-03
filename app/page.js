@@ -1,260 +1,409 @@
+'use client'
+import { useState } from 'react'
+
 export default function Home() {
-  // Data berita dummy
-  const mainNews = {
-    title: "Breaking News: Teknologi AI Terbaru Mengubah Industri Digital",
-    category: "Teknologi",
-    date: "3 November 2025",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
-    excerpt: "Perkembangan kecerdasan buatan mencapai milestone baru yang akan mengubah cara kita bekerja dan berinteraksi dengan teknologi."
-  };
+  const [formData, setFormData] = useState({
+    name: '',
+    attendance: 'hadir',
+    guests: '1',
+    message: ''
+  })
+  const [submitted, setSubmitted] = useState(false)
 
-  const latestNews = [
-    {
-      id: 1,
-      title: "Ekonomi Indonesia Tumbuh 5.2% di Kuartal Ketiga",
-      category: "Ekonomi",
-      date: "3 Nov 2025",
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=80",
-      excerpt: "Bank Indonesia mencatat pertumbuhan ekonomi yang stabil..."
-    },
-    {
-      id: 2,
-      title: "Timnas Indonesia Lolos ke Putaran Final Piala Asia",
-      category: "Olahraga",
-      date: "2 Nov 2025",
-      image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&q=80",
-      excerpt: "Kemenangan dramatis membawa Indonesia ke babak selanjutnya..."
-    },
-    {
-      id: 3,
-      title: "Peluncuran Satelit Komunikasi Generasi Baru",
-      category: "Teknologi",
-      date: "2 Nov 2025",
-      image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&q=80",
-      excerpt: "Satelit terbaru akan meningkatkan konektivitas internet di seluruh nusantara..."
-    },
-    {
-      id: 4,
-      title: "Festival Budaya Nusantara Digelar di Jakarta",
-      category: "Budaya",
-      date: "1 Nov 2025",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80",
-      excerpt: "Ratusan seniman dari berbagai daerah turut berpartisipasi..."
-    },
-    {
-      id: 5,
-      title: "Harga Minyak Dunia Turun 3% Minggu Ini",
-      category: "Ekonomi",
-      date: "1 Nov 2025",
-      image: "https://images.unsplash.com/photo-1611244419377-b0a760c19719?w=400&q=80",
-      excerpt: "Penurunan harga minyak dipengaruhi oleh produksi yang meningkat..."
-    },
-    {
-      id: 6,
-      title: "Startup Indonesia Raih Pendanaan $50 Juta",
-      category: "Bisnis",
-      date: "31 Okt 2025",
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&q=80",
-      excerpt: "Pendanaan Seri B ini akan digunakan untuk ekspansi regional..."
-    }
-  ];
+  // Countdown ke hari pernikahan
+  const weddingDate = new Date('2025-12-25')
+  const today = new Date()
+  const daysLeft = Math.ceil((weddingDate - today) / (1000 * 60 * 60 * 24))
 
-  const categories = [
-    { name: "Teknologi", icon: "💻" },
-    { name: "Ekonomi", icon: "💰" },
-    { name: "Olahraga", icon: "⚽" },
-    { name: "Politik", icon: "🏛️" },
-    { name: "Budaya", icon: "🎭" },
-    { name: "Kesehatan", icon: "🏥" }
-  ];
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSubmitted(true)
+    // Di sini nanti bisa kirim data ke backend/database
+    console.log('RSVP Data:', formData)
+  }
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">📰 BeritaKini</h1>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Beranda</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Terkini</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Populer</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">Video</a>
-            </nav>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-              Langganan
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Breaking News Banner */}
-      <div className="bg-red-600 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center">
-            <span className="bg-white text-red-600 px-3 py-1 rounded font-bold text-sm mr-3">
-              BREAKING
-            </span>
-            <p className="text-sm font-medium animate-pulse">
-              Update Terbaru: Pemerintah Umumkan Kebijakan Ekonomi Baru 2025
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section - Main News */}
-        <section className="mb-12">
-          <div className="grid md:grid-cols-2 gap-8 bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="relative h-64 md:h-auto">
-              <img 
-                src={mainNews.image}
-                alt={mainNews.title}
-                className="w-full h-full object-cover"
-              />
-              <span className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                {mainNews.category}
-              </span>
-            </div>
-            <div className="p-8 flex flex-col justify-center">
-              <p className="text-sm text-gray-500 mb-2">{mainNews.date}</p>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {mainNews.title}
-              </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {mainNews.excerpt}
-              </p>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition w-fit">
-                Baca Selengkapnya →
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Categories */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Kategori Berita</h3>
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-            {categories.map((category, index) => (
-              <button
-                key={index}
-                className="bg-white p-4 rounded-lg shadow hover:shadow-md transition text-center"
-              >
-                <div className="text-3xl mb-2">{category.icon}</div>
-                <div className="font-semibold text-gray-700">{category.name}</div>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Latest News Grid */}
-        <section>
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-900">Berita Terkini</h3>
-            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
-              Lihat Semua →
-            </a>
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-pink-50">
+      
+      {/* Hero Section with Ornament */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-pink-200 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 rounded-full opacity-20 blur-3xl"></div>
+        
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          {/* Ornament Top */}
+          <div className="text-6xl mb-4">🌸</div>
+          
+          <p className="text-pink-600 font-serif text-lg mb-4 tracking-widest">
+            THE WEDDING OF
+          </p>
+          
+          <h1 className="font-serif text-6xl md:text-8xl text-gray-800 mb-2">
+            Sarah & David
+          </h1>
+          
+          <div className="flex items-center justify-center gap-4 my-8">
+            <div className="h-px w-20 bg-pink-300"></div>
+            <p className="text-2xl">💕</p>
+            <div className="h-px w-20 bg-pink-300"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {latestNews.map((news) => (
-              <article
-                key={news.id}
-                className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden cursor-pointer"
-              >
-                <div className="relative h-48">
-                  <img 
-                    src={news.image}
-                    alt={news.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute top-3 right-3 bg-white text-gray-800 px-3 py-1 rounded-full text-xs font-semibold">
-                    {news.category}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <p className="text-xs text-gray-500 mb-2">{news.date}</p>
-                  <h4 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2">
-                    {news.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm line-clamp-2">
-                    {news.excerpt}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* Newsletter Section */}
-        <section className="mt-12 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl shadow-lg p-8 text-white">
-          <div className="max-w-3xl mx-auto text-center">
-            <h3 className="text-3xl font-bold mb-4">
-              📧 Dapatkan Berita Terbaru
-            </h3>
-            <p className="mb-6 text-blue-100">
-              Berlangganan newsletter kami dan dapatkan update berita langsung ke email Anda
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Masukkan email Anda"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              />
-              <button className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-                Langganan
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="text-xl font-bold mb-4">📰 BeritaKini</h4>
-              <p className="text-gray-400 text-sm">
-                Portal berita terpercaya dengan informasi terkini dan akurat dari berbagai kategori.
-              </p>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Kategori</h5>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white">Teknologi</a></li>
-                <li><a href="#" className="hover:text-white">Ekonomi</a></li>
-                <li><a href="#" className="hover:text-white">Olahraga</a></li>
-                <li><a href="#" className="hover:text-white">Politik</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Perusahaan</h5>
-              <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white">Tentang Kami</a></li>
-                <li><a href="#" className="hover:text-white">Kontak</a></li>
-                <li><a href="#" className="hover:text-white">Karir</a></li>
-                <li><a href="#" className="hover:text-white">Iklan</a></li>
-              </ul>
-            </div>
-            <div>
-              <h5 className="font-semibold mb-4">Ikuti Kami</h5>
-              <div className="flex space-x-4">
-                <a href="#" className="text-2xl hover:text-blue-400">📘</a>
-                <a href="#" className="text-2xl hover:text-blue-400">🐦</a>
-                <a href="#" className="text-2xl hover:text-blue-400">📸</a>
-                <a href="#" className="text-2xl hover:text-blue-400">▶️</a>
+          <p className="text-xl text-gray-600 font-light mb-8">
+            25 Desember 2025
+          </p>
+          
+          {/* Countdown */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-6 inline-block">
+            <p className="text-sm text-gray-500 mb-2">Hari yang dinanti</p>
+            <div className="flex gap-4">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-pink-600">{daysLeft}</div>
+                <div className="text-xs text-gray-500">Hari</div>
               </div>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-            <p>&copy; 2025 BeritaKini. All rights reserved.</p>
+          
+          {/* Scroll Down Indicator */}
+          <div className="mt-12 animate-bounce">
+            <p className="text-sm text-gray-400">Scroll untuk detail</p>
+            <div className="text-2xl">⬇️</div>
           </div>
         </div>
+      </section>
+
+      {/* Quote Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="text-4xl mb-6">✨</div>
+          <blockquote className="text-2xl md:text-3xl font-serif text-gray-700 italic leading-relaxed">
+            "Cinta adalah persahabatan yang telah terbakar. Seperti abu-abu yang bercahaya, 
+            cinta memiliki kehangatan yang lembut namun abadi."
+          </blockquote>
+          <p className="mt-6 text-gray-500">— Ann Landers</p>
+        </div>
+      </section>
+
+      {/* Couple Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-serif text-center text-gray-800 mb-4">
+            Mempelai
+          </h2>
+          <div className="text-center text-2xl mb-12">💐</div>
+          
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20">
+            {/* Bride */}
+            <div className="text-center">
+              <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-200 to-purple-200 flex items-center justify-center text-6xl">
+                👰
+              </div>
+              <h3 className="text-3xl font-serif text-gray-800 mb-2">Sarah Anderson</h3>
+              <p className="text-gray-600 mb-4">Putri dari Bapak John & Ibu Mary Anderson</p>
+              <div className="flex justify-center gap-3">
+                <a href="#" className="text-pink-600 hover:text-pink-700 text-xl">📷</a>
+                <a href="#" className="text-pink-600 hover:text-pink-700 text-xl">🐦</a>
+              </div>
+            </div>
+            
+            {/* Groom */}
+            <div className="text-center">
+              <div className="w-48 h-48 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-200 to-indigo-200 flex items-center justify-center text-6xl">
+                🤵
+              </div>
+              <h3 className="text-3xl font-serif text-gray-800 mb-2">David Wilson</h3>
+              <p className="text-gray-600 mb-4">Putra dari Bapak Robert & Ibu Linda Wilson</p>
+              <div className="flex justify-center gap-3">
+                <a href="#" className="text-blue-600 hover:text-blue-700 text-xl">📷</a>
+                <a href="#" className="text-blue-600 hover:text-blue-700 text-xl">🐦</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Event Details */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-serif text-center text-gray-800 mb-4">
+            Waktu & Tempat
+          </h2>
+          <div className="text-center text-2xl mb-12">📍</div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Akad */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center border-2 border-pink-100">
+              <div className="text-4xl mb-4">💒</div>
+              <h3 className="text-2xl font-serif text-gray-800 mb-4">Akad Nikah</h3>
+              <div className="space-y-2 text-gray-600">
+                <p className="flex items-center justify-center gap-2">
+                  <span>📅</span>
+                  <span>Kamis, 25 Desember 2025</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span>⏰</span>
+                  <span>08:00 - 10:00 WIB</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span>📍</span>
+                  <span>Grand Ballroom Hotel Mulia</span>
+                </p>
+              </div>
+              <button className="mt-6 bg-pink-600 text-white px-6 py-2 rounded-full hover:bg-pink-700 transition">
+                📍 Buka Maps
+              </button>
+            </div>
+            
+            {/* Resepsi */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center border-2 border-purple-100">
+              <div className="text-4xl mb-4">🎊</div>
+              <h3 className="text-2xl font-serif text-gray-800 mb-4">Resepsi</h3>
+              <div className="space-y-2 text-gray-600">
+                <p className="flex items-center justify-center gap-2">
+                  <span>📅</span>
+                  <span>Kamis, 25 Desember 2025</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span>⏰</span>
+                  <span>18:00 - 22:00 WIB</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <span>📍</span>
+                  <span>Grand Ballroom Hotel Mulia</span>
+                </p>
+              </div>
+              <button className="mt-6 bg-purple-600 text-white px-6 py-2 rounded-full hover:bg-purple-700 transition">
+                📍 Buka Maps
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RSVP Form */}
+      <section className="py-20 px-4 bg-gradient-to-br from-pink-50 to-purple-50">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-4xl font-serif text-center text-gray-800 mb-4">
+            Konfirmasi Kehadiran
+          </h2>
+          <p className="text-center text-gray-600 mb-8">
+            Mohon konfirmasi kehadiran Anda sebelum 15 Desember 2025
+          </p>
+          
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8">
+              {/* Name */}
+              <div className="mb-6">
+                <label className="block text-gray-700 font-medium mb-2">
+                  Nama Lengkap <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Masukkan nama Anda"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none transition"
+                />
+              </div>
+              
+              {/* Attendance */}
+              <div className="mb-6">
+                <label className="block text-gray-700 font-medium mb-2">
+                  Kehadiran <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <label className={`border-2 rounded-lg p-4 cursor-pointer text-center transition ${
+                    formData.attendance === 'hadir' 
+                      ? 'border-pink-500 bg-pink-50' 
+                      : 'border-gray-200 hover:border-pink-300'
+                  }`}>
+                    <input
+                      type="radio"
+                      name="attendance"
+                      value="hadir"
+                      checked={formData.attendance === 'hadir'}
+                      onChange={handleChange}
+                      className="hidden"
+                    />
+                    <div className="text-2xl mb-2">✅</div>
+                    <div className="font-medium">Hadir</div>
+                  </label>
+                  
+                  <label className={`border-2 rounded-lg p-4 cursor-pointer text-center transition ${
+                    formData.attendance === 'tidak-hadir' 
+                      ? 'border-gray-500 bg-gray-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <input
+                      type="radio"
+                      name="attendance"
+                      value="tidak-hadir"
+                      checked={formData.attendance === 'tidak-hadir'}
+                      onChange={handleChange}
+                      className="hidden"
+                    />
+                    <div className="text-2xl mb-2">❌</div>
+                    <div className="font-medium">Tidak Hadir</div>
+                  </label>
+                </div>
+              </div>
+              
+              {/* Number of Guests */}
+              {formData.attendance === 'hadir' && (
+                <div className="mb-6">
+                  <label className="block text-gray-700 font-medium mb-2">
+                    Jumlah Tamu
+                  </label>
+                  <select
+                    name="guests"
+                    value={formData.guests}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none transition"
+                  >
+                    <option value="1">1 Orang</option>
+                    <option value="2">2 Orang</option>
+                    <option value="3">3 Orang</option>
+                    <option value="4">4 Orang</option>
+                    <option value="5">5+ Orang</option>
+                  </select>
+                </div>
+              )}
+              
+              {/* Message */}
+              <div className="mb-6">
+                <label className="block text-gray-700 font-medium mb-2">
+                  Ucapan & Doa
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows="4"
+                  placeholder="Tuliskan ucapan dan doa untuk kami..."
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:outline-none transition resize-none"
+                ></textarea>
+              </div>
+              
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 rounded-lg font-semibold hover:from-pink-700 hover:to-purple-700 transition shadow-lg"
+              >
+                💌 Kirim Konfirmasi
+              </button>
+            </form>
+          ) : (
+            <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
+              <div className="text-6xl mb-4">🎉</div>
+              <h3 className="text-2xl font-serif text-gray-800 mb-4">
+                Terima Kasih!
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Konfirmasi kehadiran Anda telah kami terima. 
+                <br />Kami sangat menantikan kehadiran Anda!
+              </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="text-pink-600 hover:text-pink-700 font-medium"
+              >
+                ← Kirim konfirmasi lagi
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Gallery Preview */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-serif text-center text-gray-800 mb-4">
+            Gallery
+          </h2>
+          <div className="text-center text-2xl mb-12">📸</div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div
+                key={i}
+                className="aspect-square bg-gradient-to-br from-pink-200 to-purple-200 rounded-lg flex items-center justify-center text-4xl hover:scale-105 transition cursor-pointer"
+              >
+                {i % 2 === 0 ? '💑' : '💕'}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gift Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-4xl font-serif text-gray-800 mb-4">
+            Wedding Gift
+          </h2>
+          <div className="text-2xl mb-6">🎁</div>
+          <p className="text-gray-600 mb-8">
+            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. 
+            Namun jika memberi adalah ungkapan kasih, Anda dapat memberikan kado secara cashless.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="text-3xl mb-3">🏦</div>
+              <h4 className="font-semibold text-gray-800 mb-2">Transfer Bank</h4>
+              <p className="text-sm text-gray-600 mb-3">Bank BCA</p>
+              <div className="bg-gray-50 rounded-lg p-3 font-mono text-lg">
+                1234567890
+              </div>
+              <p className="text-sm text-gray-600 mt-2">a.n. Sarah Anderson</p>
+              <button className="mt-4 text-pink-600 hover:text-pink-700 font-medium text-sm">
+                📋 Copy Nomor Rekening
+              </button>
+            </div>
+            
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="text-3xl mb-3">💳</div>
+              <h4 className="font-semibold text-gray-800 mb-2">E-Wallet</h4>
+              <p className="text-sm text-gray-600 mb-3">GoPay / OVO</p>
+              <div className="bg-gray-50 rounded-lg p-3 font-mono text-lg">
+                0812-3456-7890
+              </div>
+              <p className="text-sm text-gray-600 mt-2">a.n. Sarah Anderson</p>
+              <button className="mt-4 text-purple-600 hover:text-purple-700 font-medium text-sm">
+                📋 Copy Nomor
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-pink-600 to-purple-600 text-white py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-4xl mb-4">💝</div>
+          <h3 className="text-3xl font-serif mb-4">Sarah & David</h3>
+          <p className="text-pink-100 mb-6">
+            Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila 
+            Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
+          </p>
+          <div className="h-px w-32 bg-white/30 mx-auto mb-6"></div>
+          <p className="text-sm text-pink-100">
+            Terima kasih atas doa dan ucapan yang telah diberikan
+          </p>
+          <p className="text-xs text-pink-200 mt-6">
+            © 2025 Wedding Invitation. Made with 💕
+          </p>
+        </div>
       </footer>
+      
     </div>
-  );
+  )
 }
